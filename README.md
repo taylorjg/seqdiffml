@@ -19,3 +19,6 @@ This is my first program in OCaml. I am attempting to port my [seqdiffhs](https:
     * https://ocaml.janestreet.com/ocaml-core/latest/doc/core_kernel/Quickcheck_intf/Quickcheck_config.modt/
     * https://ocaml.janestreet.com/ocaml-core/latest/doc/core_kernel/Quickcheck_intf/Quickcheck_configured.modt/
     * https://github.com/janestreet/ppx_assert
+    * https://github.com/janestreet/ppx_inline_test
+    * https://github.com/janestreet/jane-street-tests
+* [Issue raised against 'jane-street-tests'](https://github.com/janestreet/jane-street-tests/issues/1)
