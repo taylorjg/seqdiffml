@@ -1,10 +1,8 @@
 open Core.Std
 
-type value_and_count = { value : int; count : int }
-
 type diff =
-    | Duplicate of value_and_count
-    | Missing of value_and_count
+    | Duplicate of { value : int; count : int }
+    | Missing of { value : int; count : int }
 
 let diffs xs =
     let rec loop xs ev rc =
@@ -18,19 +16,21 @@ let diffs xs =
             | (Some d1, Some d2) -> d1 :: d2 :: ds
             | (Some d1, None) -> d1 :: ds
             | (None, Some d2) -> d2 :: ds
-            | (None, None) -> ds)
+            | _ -> ds)
         | [] -> if rc > 0 then [Duplicate { value = (ev - 1); count = rc }] else []
     in
     loop xs 0 0
 
-let print_diff d =
-    match d with
-    | Duplicate { value = v; count = c } -> printf "Duplicate (%d, %d)\n" v c
-    | Missing { value = v; count = c } -> printf "Missing (%d, %d)\n" v c
+let string_of_diff = function
+    | Duplicate { value = v; count = c } -> sprintf "Duplicate (%d, %d)" v c
+    | Missing { value = v; count = c } -> sprintf "Missing (%d, %d)" v c
+
+let print_list f xs =
+    List.map ~f xs
+    |> String.concat ~sep:", "
+    |> print_endline
 
 let () =
     let xs = [0; 1; 2; 3; 4; 4; 4; 4; 5; 6; 7; 8; 11; 12] in
-    List.map ~f:string_of_int xs
-    |> String.concat ~sep:" "
-    |> print_endline;
-    diffs xs |> List.iter ~f:print_diff
+    print_list string_of_int xs;
+    print_list string_of_diff (diffs xs)
